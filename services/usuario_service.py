@@ -68,9 +68,12 @@ def atualizando_movimentacao(usuario_id: int, valor_antigo: float, movimentacao:
     usuario = get_usuario(usuario_id, session)
 
     # Retira valor antigo antes de recalcular
-    saldo_temp = usuario.saldo - valor_antigo
+    valor_temp = valor_antigo * -1
     usuario.saldo = calcula_saldo(
-        saldo_temp, movimentacao.tipo, movimentacao.valor)
+        usuario.saldo, movimentacao.tipo, valor_temp)
+    
+    usuario.saldo = calcula_saldo(
+        usuario.saldo, movimentacao.tipo, movimentacao.valor)
 
     usuario.ultimo_calculo = datetime.now()
     session.commit()
@@ -83,9 +86,9 @@ def excluir_movimentacao(usuario_id: int, movimentacao: Movimentacao, session: S
     usuario = get_usuario(usuario_id, session)
 
     # Ajusta o valor
-    atuali_valor = movimentacao.valor * -1
+    valor_temp = movimentacao.valor * -1
     usuario.saldo = calcula_saldo(
-        usuario.saldo, movimentacao.tipo, atuali_valor)
+        usuario.saldo, movimentacao.tipo, valor_temp)
 
     usuario.ultimo_calculo = datetime.now()
     session.commit()
