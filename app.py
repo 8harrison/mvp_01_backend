@@ -1,5 +1,6 @@
 from flask_openapi3 import OpenAPI
 from flask import redirect
+from flask_cors import CORS
 
 from configs.openapi import info, home_tag, movimentacao_tag, usuario_tag
 
@@ -41,7 +42,7 @@ from schemas import (
 )
 
 app = OpenAPI(__name__, info=info)
-
+CORS(app)
 
 @app.get('/', tags=[home_tag])
 def home():
