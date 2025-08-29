@@ -99,8 +99,9 @@ def listar_movimentacoes(usuario_id: int, session: SessionType):
         raise NotFoundError(ERRO_USUARIO_NOT_FOUND)
     movimentacoes = session.query(Movimentacao).filter(
         Movimentacao.usuario == usuario_id).all()
+    usuario.movimentacoes = movimentacoes
     return response_formatter(
-        apresenta_movimentacoes(movimentacoes),
+        usuario.usuario_to_json(),
         SucessMessages.MOV_DISPONIVEIS
     )
 
