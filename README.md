@@ -37,7 +37,11 @@ cd mvp_api_gestao_financeira
 
 2. **Crie um ambiente virtual**:
 ```bash
+# Linux/Mac
 python3 -m venv env
+
+# Windows
+python -m venv env
 ```
 
 3. **Ative o ambiente virtual**:
