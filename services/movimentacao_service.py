@@ -38,11 +38,11 @@ def excluir_movimentacao(id, usuario_id, session: SessionType):
         raise NotFoundError(ERRO_MOVIMENTACAO_NOT_FOUND)
 
     usuario_service.excluir_movimentacao(usuario_id, movimentacao)
-    count = query_movimentacao.delete()
+    session.delete(movimentacao)
 
     session.commit()
 
-    if count == 1:
+    if movimentacao:
         return response_formatter(
             movimentacao.movimentacao_to_json(),
             SucessMessages.MOV_EXCLUIDA
