@@ -1,4 +1,5 @@
 from . import usuario_service
+from . import usuario_categoria_mensal_service
 
 from .movimentacao_service import (
     adicionar_movimentacao,
