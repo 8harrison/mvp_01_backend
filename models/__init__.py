@@ -7,6 +7,7 @@ from sqlalchemy import create_engine
 from models.base import Base
 from models.movimentacao import Movimentacao, TipoMovimentacao
 from models.usuario import Usuario
+from models.usuario_categoria_mensal import UsuarioCategoriaMensal
 
 # url de acesso ao banco (essa é uma url de acesso ao sqlite local)
 db_url = 'sqlite:///database/db.sqlite3'
