@@ -1,7 +1,8 @@
-from sqlalchemy import event
+from sqlalchemy import event, inspect
 from sqlalchemy.orm import Session
 
 from models import Movimentacao, UsuarioCategoriaMensal
+
 
 @event.listens_for(Movimentacao, "after_update")
 def after_update_movimentacao(mapper, connection, target: Movimentacao):
@@ -10,16 +11,16 @@ def after_update_movimentacao(mapper, connection, target: Movimentacao):
     resumo, ano, mes, tipo = _get_resumo(session, target)
 
     if resumo:
-        # Subtrai o valor antigo e soma o novo
-        # OBS: target.__dict__.get("valor") já foi atualizado aqui,
-        # então você precisa usar `target.__history__` ou manter o valor antigo no serviço
-        # Sugestão: salvar o valor antigo via attr.set_committed_value antes do commit.
-        pass  # ⚠️ aqui precisa da lógica de "valor antigo"
+        hist = inspect(target).attrs.valor.history
+        if hist.deleted and hist.added:
+            valor_antigo = hist.deleted[0]
+            valor_novo = hist.added[0]
 
-    session.commit()
+            resumo.valor_total -= int(valor_antigo)
+            resumo.valor_total += int(valor_novo)
+
+    session.flush()
     session.close()
-
-
 
 
 def _get_resumo(session: Session, target: Movimentacao):
@@ -59,12 +60,13 @@ def after_insert_movimentacao(mapper, connection, target: Movimentacao):
 
     session.commit()
 
+
 @event.listens_for(Movimentacao, "after_delete")
 def after_delete_movimentacao(mapper, connection, target: Movimentacao):
     """Atualiza resumo após deletar movimentação"""
-   
+
     session = Session(bind=connection)
-    
+
     resumo, ano, mes, tipo = _get_resumo(session, target)
 
     if resumo:

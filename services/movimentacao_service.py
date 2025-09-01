@@ -62,13 +62,12 @@ def get_movimentacao(movimentacao_id, session: SessionType) -> Movimentacao:
 def update_movimentacao(id, movimentacao: Movimentacao, session: SessionType):
     movimentacao_dict = movimentacao.movimentacao_to_json()
     movimentacao_dict.pop('id', None)
-    movimentacao_dict.pop('usuario_id', None)
-    movimentacao_dict['usuario'] = movimentacao.usuario
-    count = session.query(Movimentacao).filter(
-        Movimentacao.id == id).update(movimentacao_dict)
-
+    movimen_encontrada: Movimentacao = session.get(Movimentacao, id)
+    
+    movimen_encontrada.valor = movimentacao.valor
+    
     session.commit()
-    return count
+    return movimen_encontrada
 
 @with_session
 def atualizar_movimentacao(id, usuario_id, movimentacao_dto: MovimentacaoDto, session: SessionType):
@@ -77,12 +76,12 @@ def atualizar_movimentacao(id, usuario_id, movimentacao_dto: MovimentacaoDto, se
     movimentacao: Movimentacao = get_movimentacao(id, session)
     valor_antigo = movimentacao.valor
 
-    count = update_movimentacao(id, atualizando_movimentacao, session)
+    movi_updated = update_movimentacao(id, atualizando_movimentacao, session)
 
     usuario_service.atualizando_movimentacao(
         usuario_id, valor_antigo, atualizando_movimentacao)
 
-    if count == 1:
+    if movi_updated:
         # Recarregar o objeto atualizado do banco
         movimentacao_atualizada = get_movimentacao(id, session)
         return response_formatter(
