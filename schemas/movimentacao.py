@@ -35,10 +35,16 @@ class MovimentacaoViewSchema(BaseModel):
     data: MovimentacaoDataSchema
     message: str = Field(example='Exemplo de mensagem')
 
+class ListaMovimetacaoData(BaseModel):
+    movimentacoes: List[MovimentacaoDataSchema]
+    ultimo_calculo: datetime = Field(example=datetime(2025, 8, 18, 22, 30))
+    username: str = Field(example='Teste')
+    saldo: float = Field(example=15000)
+    usuario_id: int = Field(example=1)
 
 class ListagemMovimentacoesSchema(BaseModel):
     """Define como uma listagem de movimentações será retornada."""
-    data: List[MovimentacaoDataSchema]
+    data: ListaMovimetacaoData   
     message: str = Field(example='Exemplo de mensagem')
 
 
