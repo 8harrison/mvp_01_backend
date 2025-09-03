@@ -3,7 +3,7 @@ from flask import redirect
 from flask_cors import CORS
 from datetime import datetime
 
-from configs.openapi import info, home_tag, movimentacao_tag, usuario_tag
+from configs.openapi import info, home_tag, movimentacao_tag, usuario_tag, resumo_tag
 
 from models import Usuario
 
@@ -120,7 +120,7 @@ def delete_movimentacao_por_id(query: MovimentacaoDeleteSchema):
     usuario_id = query.usuario_id
     return excluir_movimentacao(movimentacao_id, usuario_id), HttpStatus.OK
 
-@app.get(LISTAR_RESUMOS, responses=RES_GET_RESPONSES)
+@app.get(LISTAR_RESUMOS, responses=RES_GET_RESPONSES, tags=[resumo_tag])
 @tratar_erros
 def get_resumos_por_periodo(query: ResumoBuscaSchema):
     """
