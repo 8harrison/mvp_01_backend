@@ -15,3 +15,14 @@ class UsuarioCategoriaMensal(Base):
     categoria = Column(String(100), nullable=False)
     tipo = Column(String(10), nullable=False)
     valor_total = Column(Numeric(12, 2), nullable=False, default=0)
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "usuario_id": self.usuario_id,
+            "ano": self.ano,
+            "mes": self.mes,
+            "categoria": self.categoria,
+            "tipo": self.tipo,
+            "valor_total": self.valor_total
+        }

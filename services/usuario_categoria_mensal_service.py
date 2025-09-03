@@ -1,7 +1,9 @@
 from sqlalchemy import event, inspect
 from sqlalchemy.orm import Session
+from typing import List
 
 from models import Movimentacao, UsuarioCategoriaMensal
+from utils import with_session, response_formatter, SucessMessages
 
 
 @event.listens_for(Movimentacao, "after_update")
@@ -75,3 +77,20 @@ def after_delete_movimentacao(mapper, connection, target: Movimentacao):
             session.delete(resumo)
 
     session.commit()
+
+@with_session
+def get_resumos_de_usuario_por_mes_e_ano(usuario_id: int, mes: int, ano: int, session: Session):
+    resumos = session.query(UsuarioCategoriaMensal).filter( 
+        UsuarioCategoriaMensal.usuario_id == usuario_id and
+        UsuarioCategoriaMensal.mes == mes and
+        UsuarioCategoriaMensal.ano == ano
+        ).all()
+    
+    return response_formatter(
+        converte_lista_to_json(resumos),
+        SucessMessages.RES_DISPONIVEIS
+    )
+    
+
+def converte_lista_to_json(resumos: List[UsuarioCategoriaMensal]):
+    return list(map(lambda r: r.to_json(), resumos))

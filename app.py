@@ -1,6 +1,7 @@
 from flask_openapi3 import OpenAPI
 from flask import redirect
 from flask_cors import CORS
+from datetime import datetime
 
 from configs.openapi import info, home_tag, movimentacao_tag, usuario_tag
 
@@ -14,6 +15,7 @@ from services import (
 )
 
 from services import usuario_service
+from services.usuario_categoria_mensal_service import get_resumos_de_usuario_por_mes_e_ano
 
 from utils import (
     ADICIONAR_MOVIMENTACAO,
@@ -22,6 +24,7 @@ from utils import (
     EXCLUIR_MOVIMENTACAO,
     AUTENTICAR_USUARIO,
     REGISTRAR_USUARIO,
+    LISTAR_RESUMOS,
     HttpStatus,
     tratar_erros
 )
@@ -33,12 +36,14 @@ from schemas import (
     UsuarioSchema,
     MovimentacaoUpdateSchema,
     MovimentacaoDeleteSchema,
+    ResumoBuscaSchema,
     MOV_POST_RESPONSES,
     MOV_GET_LIST_RESPONSES,
     MOV_PUT_RESPONSES,
     MOV_DELETE_RESPONSES,
     USU_REGISTRO_RESPONSE,
-    USU_AUTH_RESPONSE
+    USU_AUTH_RESPONSE,
+    RES_GET_RESPONSES
 )
 
 app = OpenAPI(__name__, info=info)
@@ -114,3 +119,21 @@ def delete_movimentacao_por_id(query: MovimentacaoDeleteSchema):
     movimentacao_id = query.movimentacao_id
     usuario_id = query.usuario_id
     return excluir_movimentacao(movimentacao_id, usuario_id), HttpStatus.OK
+
+@app.get(LISTAR_RESUMOS, responses=RES_GET_RESPONSES)
+@tratar_erros
+def get_resumos_por_periodo(query: ResumoBuscaSchema):
+    """
+    Lista resumos de usuário por ano e mês
+    """
+    usuario_id = query.usuario_id
+    ano = query.ano
+    mes = query.mes
+
+    now = datetime.now()
+    if not ano:
+        ano = now.year
+    if not mes:
+        mes = now.month
+
+    return get_resumos_de_usuario_por_mes_e_ano(usuario_id, mes, ano)

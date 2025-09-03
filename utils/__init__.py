@@ -16,6 +16,7 @@ from .constants import (
     GET,
     POST,
     PUT,
+    LISTAR_RESUMOS,
     HttpStatus,
     SucessMessages
 )

@@ -24,6 +24,8 @@ class SucessMessages:
     USU_CRIADO = 'Usuário criado.'
     USU_LOGADO = 'Usuário Logado.'
     USU_SALDO_ATUALIZADO = 'Saldo do usuário atualizado.'
+
+    RES_DISPONIVEIS = 'Resumos do período solicitado.'
 # 
 # //////////////////////////////////////////////////////
 
@@ -53,6 +55,9 @@ EXCLUIR_MOVIMENTACAO = '/excluir_movimentacao'
 
 REGISTRAR_USUARIO = '/registrar_usuario'
 AUTENTICAR_USUARIO = '/autenticar_usuario'
+
+# RESUMO:
+LISTAR_RESUMOS = '/listar_resumos'
 # 
 # //////////////////////////////////////////////////////
 

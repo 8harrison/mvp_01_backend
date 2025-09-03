@@ -10,6 +10,8 @@ from .movimentacao import (
 
 from .usuario import UsuarioDataSchema, UsuarioSchema, UsuarioViewSchema
 
+from .resumos import ResumoBuscaSchema, ResumoViewSchema
+
 from .error import ErrorSchema
 
 error_responses = {
@@ -27,3 +29,4 @@ MOV_PUT_RESPONSES = {"200": MovimentacaoViewSchema, **error_responses}
 MOV_DELETE_RESPONSES = {"200": MovimentacaoViewSchema, **error_responses}
 USU_REGISTRO_RESPONSE = {"200": UsuarioViewSchema, **error_responses}
 USU_AUTH_RESPONSE = {"200": UsuarioViewSchema, **error_responses}
+RES_GET_RESPONSES = {"200": ResumoViewSchema, **error_responses}
