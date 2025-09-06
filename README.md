@@ -31,7 +31,7 @@ A API de Gestão Financeira é uma aplicação backend desenvolvida em Flask que
 
 1. **Clone o repositório** (se aplicável):
 ```bash
-git clone <url-do-repositorio>
+git clone https://github.com/8harrison/mvp_01_backend.git
 cd mvp_api_gestao_financeira
 ```
 
