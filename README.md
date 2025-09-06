@@ -105,6 +105,9 @@ flask run --host 0.0.0.0 --port 5000 --reload
 - **POST** `/autenticar_usuario` - Autentica um usuário
 - **POST** `/registrar_usuario` - Registra um novo usuário
 
+#### Resumos
+- **GET** `/listar_resumos`
+
 ## Modelos de Dados
 
 ### Movimentação
@@ -124,6 +127,15 @@ flask run --host 0.0.0.0 --port 5000 --reload
 - `saldo`: Saldo atual do usuário (Float)
 - `ultimo_calculo`: Data do último cálculo de saldo (DateTime)
 - `created_at`: Data de criação do usuário (DateTime)
+
+### Resumo
+- `id`: Identificador único (Integer)
+- `usuario_id`: ID do usuário associado (Integer)
+- `ano`: Ano das movimentações do resumo (Integer)
+- `mes`: Mês das movimentações do resumo (Integer)
+- `categoria`: Categoria das movimentações (String)
+- `tipo`: Tipo das movimentações (String)
+- `valor_total`: Valor total das movimentações no periodo de um mês (Float)
 
 ## Exemplos de Uso
 
