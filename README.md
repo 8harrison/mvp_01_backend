@@ -128,7 +128,7 @@ flask run --host 0.0.0.0 --port 5000 --reload
 - `ultimo_calculo`: Data do último cálculo de saldo (DateTime)
 - `created_at`: Data de criação do usuário (DateTime)
 
-### Usuário
+### Resumo
 - `id`: Identificador único (Integer)
 - `usuario_id`: ID do usuário associado (Integer)
 - `ano`: Ano das movimentações do resumo (Integer)
