@@ -216,3 +216,9 @@ Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes
 ## Contato
 
 Para dúvidas ou sugestões, entre em contato através do email.
+
+---
+
+## 👨‍💻 Autor
+
+Projeto desenvolvido por **Harrison Monteiro de Oliveira**.
