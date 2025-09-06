@@ -81,8 +81,8 @@ def after_delete_movimentacao(mapper, connection, target: Movimentacao):
 @with_session
 def get_resumos_de_usuario_por_mes_e_ano(usuario_id: int, mes: int, ano: int, session: Session):
     resumos = session.query(UsuarioCategoriaMensal).filter( 
-        UsuarioCategoriaMensal.usuario_id == usuario_id and
-        UsuarioCategoriaMensal.mes == mes and
+        UsuarioCategoriaMensal.usuario_id == usuario_id,
+        UsuarioCategoriaMensal.mes == mes,
         UsuarioCategoriaMensal.ano == ano
         ).all()
     
